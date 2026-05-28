@@ -3,7 +3,11 @@
   "displayName": "Hybrid Coder",
   "description": "Hybrid AI coding workflow: local CLI agent as executor, web chat as brain",
   "version": "0.1.0",
-  "publisher": "local",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bartlomiej-Stec/hybrid-coder"
+  },
+  "publisher": "Just4Devs",
   "engines": {
     "vscode": "^1.85.0"
   },
