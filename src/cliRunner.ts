@@ -10,7 +10,6 @@ export interface CliRunnerOptions {
 }
 
 export class CliRunner {
-  // Przechowujemy kontekst rozszerzenia, by mieć dostęp do globalState
   private static context: vscode.ExtensionContext;
 
   public static initialize(context: vscode.ExtensionContext) {
@@ -26,7 +25,6 @@ export class CliRunner {
     let argsTemplate: string;
 
     if (provider === "custom") {
-      // Pobieramy konfigurację z globalState zamiast z ustawień w GUI
       command = this.context?.globalState.get<string>("customCliCommand") || "qwen";
       argsTemplate = this.context?.globalState.get<string>("customCliArgs") || "-p \"{prompt}\"";
     } else {
@@ -55,7 +53,6 @@ export class CliRunner {
 
   private static buildArgs(template: string, prompt: string): string[] {
     const args: string[] = [];
-    // dzielimy template, ale zachowujemy {prompt} jako osobny token
     const parts = template.split(/(\{prompt\})/g);
 
     for (let part of parts) {
@@ -67,10 +64,8 @@ export class CliRunner {
       part = part.trim();
       if (!part) continue;
 
-      // tokenizacja template respektująca cudzysłowy, np. -p "{prompt}" --flag="value"
       const tokens = part.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
       for (let token of tokens) {
-        // usuń otaczające cudzysłowy z template
         if (token.startsWith('"') && token.endsWith('"')) {
           token = token.slice(1, -1);
         }
@@ -78,7 +73,6 @@ export class CliRunner {
       }
     }
 
-    // jeśli template nie zawierał {prompt}, dodaj na końcu
     if (!template.includes("{prompt}")) {
       args.push(prompt);
     }
@@ -93,7 +87,7 @@ export class CliRunner {
 
       const child = spawn(command, args, {
         cwd,
-        shell: false, // kluczowe, nie interpretujemy przez shell
+        shell: false, 
         env: { ...process.env },
         windowsHide: true,
       });

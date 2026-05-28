@@ -191,19 +191,13 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
     this.view?.webview.postMessage(message);
   }
 
-  // =========================================================================
-  // TU ZMIENIŁ SIĘ SPOSÓB ŁADOWANIA HTML - POBIERAMY Z PLIKU I PODMIENIAMY
-  // =========================================================================
   private getHtml(webview: vscode.Webview): string {
     const cssUri = webview.asWebviewUri(vscode.Uri.joinPath(this.extensionUri, "media", "sidebar.css"));
     const jsUri = webview.asWebviewUri(vscode.Uri.joinPath(this.extensionUri, "media", "sidebar.js"));
     const htmlPath = vscode.Uri.joinPath(this.extensionUri, "media", "sidebar.html").fsPath;
     const nonce = this.getNonce();
 
-    // Wczytaj czysty plik HTML jako string
     let html = fs.readFileSync(htmlPath, "utf-8");
-
-    // Podmień zmienne używając wyrażeń regularnych z flagą /g (zastępuje wszystkie wystąpienia)
     html = html
       .replace(/{{cspSource}}/g, webview.cspSource)
       .replace(/{{nonce}}/g, nonce)

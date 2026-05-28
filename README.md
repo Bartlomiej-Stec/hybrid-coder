@@ -2,7 +2,7 @@
 
 A VS Code extension that implements a **hybrid AI coding workflow**: a local CLI agent acts as the executor, while a web-based AI chat serves as the planner.
 
-**Main goal:** Enable complex coding tasks on consumer hardware where you cannot run a top-tier agent, only a small, heavily-quantized local model. Instead of paying for Claude, Codex, or similar agents, you delegate the hard reasoning to free web chats, while the local CLI just reads files and applies patches.
+**Main goal:** Enable complex coding tasks on consumer hardware where you cannot run a top-tier agent, only a small, heavily-quantized local model. Instead of paying for Claude, Codex, or similar APIs, you delegate the hard reasoning to free web chats, while the local CLI uses a small local model to read files and apply patches.
 
 For example, you can run a Qwen3.6-35B-A3B with Q4 quantization locally, but solve the task with a "brain" on the level of Gemini 3.1 Pro.
 
@@ -10,7 +10,7 @@ For example, you can run a Qwen3.6-35B-A3B with Q4 quantization locally, but sol
 
 The core idea is simple: **don't rely on local AI model to do everything**. Instead, split the work between two agents, each doing what it's best at:
 
-- **Local CLI agent** (e.g. `qwen`, `codex`, `OpenCode`, `claude`) — runs on your machine, has direct access to your files. Use it for what it's good at: scanning the codebase to find relevant files, and applying code changes. It doesn't need to be smart — just reliable.
+- **Local CLI agent** (e.g. `qwen`, `codex`, `OpenCode`, `claude`) configured with your local model — runs on your machine, has direct access to your files. Use it for what it's good at: scanning the codebase to find relevant files, and applying code changes. It doesn't need to be smart — just reliable.
 - **Web AI chat** (Claude, GPT, Gemini, Google AI Studio etc.) — the real "brain". Handles planning, architecture, and reasoning. Usually free, and significantly smarter than anything you can run locally on consumer hardware.
 
 **Benefits:**
