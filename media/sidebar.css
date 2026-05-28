@@ -1,0 +1,270 @@
+:root {
+  --bg: var(--vscode-editor-background);
+  --fg: var(--vscode-editor-foreground);
+  --input-bg: var(--vscode-input-background);
+  --input-border: var(--vscode-input-border);
+  --input-fg: var(--vscode-input-foreground);
+  --btn-bg: var(--vscode-button-background);
+  --btn-fg: var(--vscode-button-foreground);
+  --btn-hover: var(--vscode-button-hoverBackground);
+  --btn-secondary-bg: var(--vscode-button-secondaryBackground);
+  --btn-secondary-fg: var(--vscode-button-secondaryForeground);
+  --border: var(--vscode-panel-border);
+  --accent: var(--vscode-focusBorder);
+  --badge-bg: var(--vscode-badge-background);
+  --badge-fg: var(--vscode-badge-foreground);
+  --list-hover: var(--vscode-list-hoverBackground);
+  --muted: var(--vscode-descriptionForeground);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--fg);
+  background: var(--bg);
+}
+
+.container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-child { border-bottom: none; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+}
+
+.header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+textarea {
+  width: 100%;
+  background: var(--input-bg);
+  color: var(--input-fg);
+  border: 1px solid var(--input-border);
+  padding: 8px;
+  font-family: var(--vscode-editor-font-family);
+  font-size: 12px;
+  resize: vertical;
+  border-radius: 3px;
+}
+
+textarea:focus {
+  outline: 1px solid var(--accent);
+}
+
+.primary-btn {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.primary-btn:hover { background: var(--btn-hover); }
+.primary-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.icon-btn {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-fg);
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.icon-btn:hover { opacity: 0.85; }
+
+.file-list {
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--input-bg);
+  transition: opacity 0.2s ease;
+}
+
+.file-list.searching {
+  opacity: 0.35;
+  pointer-events: none;
+  user-select: none;
+}
+
+.file-list.searching .file-item {
+  cursor: default;
+}
+
+.file-list:empty::before {
+  content: "No files yet. Run the finder above.";
+  display: block;
+  padding: 16px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* Loading spinner */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--muted);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Animated dots */
+.dots::after {
+  content: ".";
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0% { content: "."; }
+  25% { content: ".."; }
+  50% { content: "..."; }
+  75% { content: ""; }
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.file-item:last-child { border-bottom: none; }
+.file-item:hover { background: var(--list-hover); }
+
+.file-item input[type="checkbox"] {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.file-path {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: var(--vscode-editor-font-family);
+  font-size: 11px;
+}
+
+.file-path.missing {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.file-path.toolarge {
+  color: var(--vscode-errorForeground, #f48771);
+}
+
+.file-badge {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.file-remove {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.file-remove:hover { color: var(--vscode-errorForeground, #f48771); }
+
+.status {
+  font-size: 11px;
+  color: var(--muted);
+  min-height: 14px;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-text {
+  font-style: italic;
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.preview {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 8px;
+  font-family: var(--vscode-editor-font-family);
+  font-size: 10px;
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.collapsible .toggle { cursor: pointer; user-select: none; }
+.collapsible.collapsed .preview { display: none; }
+.collapsible .chevron { font-size: 10px; color: var(--muted); transition: transform 0.15s; }
+.collapsible.collapsed .chevron { transform: rotate(-90deg); }

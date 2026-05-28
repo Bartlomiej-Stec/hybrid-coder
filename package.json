@@ -1,0 +1,101 @@
+{
+  "name": "hybrid-coder",
+  "displayName": "Hybrid Coder",
+  "description": "Hybrid AI coding workflow: local CLI agent as executor, web chat as brain",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "hybrid-coder",
+          "title": "Hybrid Coder",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "hybrid-coder": [
+        {
+          "type": "webview",
+          "id": "hybrid-coder.sidebar",
+          "name": "Hybrid Coder"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "hybrid-coder.openSettings",
+        "title": "Hybrid Coder: Open Settings"
+      },
+      {
+        "command": "hybrid-coder.configureCustomProvider",
+        "title": "Hybrid Coder: Configure Custom Provider"
+      }
+    ],
+    "configuration": {
+      "title": "Hybrid Coder",
+      "properties": {
+        "hybrid-coder.provider": {
+          "type": "string",
+          "default": "qwen",
+          "enum": [
+            "qwen",
+            "custom"
+          ],
+          "enumDescriptions": [
+            "Qwen",
+            "Custom (skonfiguruj interaktywnie)"
+          ],
+          "description": "Predefined CLI provider. Select a provider for automatic configuration, or 'custom' to setup interactively."
+        },
+        "hybrid-coder.maxFileSizeKB": {
+          "type": "number",
+          "default": 200,
+          "description": "Maximum file size (KB) to include in context"
+        },
+        "hybrid-coder.fileExtensions": {
+          "type": "array",
+          "default": [
+            "ts", "tsx", "js", "jsx", "py", "go", "rs", "java", "c", "cpp", "h",
+            "cs", "rb", "php", "swift", "kt", "vue", "svelte", "html", "css",
+            "scss", "json", "yaml", "yml", "toml", "md", "sh", "sql"
+          ],
+          "description": "File extensions considered by the file finder"
+        },
+        "hybrid-coder.ignorePatterns": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/dist/**",
+            "**/build/**",
+            "**/.next/**",
+            "**/out/**",
+            "**/target/**",
+            "**/__pycache__/**",
+            "**/.venv/**",
+            "**/venv/**"
+          ],
+          "description": "Glob patterns to ignore when validating file paths"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}

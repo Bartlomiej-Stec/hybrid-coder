@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src {{cspSource}} 'unsafe-inline'; script-src 'nonce-{{nonce}}'; img-src {{cspSource}} data:;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{{cssUri}}" rel="stylesheet">
+  <title>Hybrid Coder</title>
+</head>
+<body>
+  <div class="container">
+
+    <section class="section">
+      <div class="section-header">
+        <h2>1. Problem</h2>
+        <button class="icon-btn" id="btnSettings" title="Settings">⚙</button>
+      </div>
+      <textarea id="prompt" placeholder="Describe what you want to build or fix..." rows="5"></textarea>
+      <button class="primary-btn" id="btnFind">Find relevant files</button>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>2. Context</h2>
+        <div class="header-actions">
+          <button class="icon-btn" id="btnAddFile" title="Add file">+</button>
+          <button class="icon-btn" id="btnSelectAll" title="Select all">✓</button>
+          <button class="icon-btn" id="btnSelectNone" title="Select none">✕</button>
+        </div>
+      </div>
+      <div id="fileList" class="file-list"></div>
+      <div id="loadingIndicator" class="status" style="display:none;">
+        <span class="spinner"></span>
+        <span id="statusLine" class="status-text dots">Asking agent to find relevant files</span>
+      </div>
+      <div id="finalStatus" class="status" style="display:none;"></div>
+      <button class="primary-btn" id="btnCopy">Generate & copy context</button>
+    </section>
+
+    <section class="section">
+      <h2>3. Apply changes</h2>
+      <p class="hint">Paste the web chat response below. Click to copy context + response to clipboard for your interactive agent.</p>
+      <textarea id="webchatResponse" placeholder="Paste web chat response here..." rows="6"></textarea>
+      <button class="primary-btn" id="btnApply">Copy to clipboard</button>
+    </section>
+
+    <section class="section collapsible">
+      <div class="section-header toggle">
+        <h2>Preview</h2>
+        <span class="chevron">▾</span>
+      </div>
+      <pre id="preview" class="preview"></pre>
+    </section>
+
+  </div>
+  <script nonce="{{nonce}}" src="{{jsUri}}"></script>
+</body>
+</html>
